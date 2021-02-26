@@ -40,11 +40,6 @@ define('VCARD_GEO_LAT', 0);
 define('VCARD_GEO_LON', 1);
 
 /**
- * @ignore
- */
-require_once 'PEAR.php';
-
-/**
  * This class builds a single vCard (version 3.0 or 2.1).
  *
  * General note: we use the terms "set" "add" and "get" as function
@@ -69,7 +64,7 @@ require_once 'PEAR.php';
  * @link      http://pear.php.net/package/Contact_Vcard_Build
  *
  */
-class Contact_Vcard_Build extends PEAR
+class Contact_Vcard_Build
 {
     /**
      * Values for vCard components.
@@ -109,11 +104,14 @@ class Contact_Vcard_Build extends PEAR
      */
     function __construct($version = '3.0')
     {
-        $this->PEAR();
-        $this->setErrorHandling(PEAR_ERROR_PRINT);
         $this->setVersion($version);
     }
-
+    
+    // simple replacement for PEAR::raiseError
+    function raiseError($message) {
+        throw new Exception($message);
+    }
+    
     /**
      * Prepares a string so it may be safely used as vCard values.  DO
      * NOT use this with binary encodings.  Operates on text in-place;
