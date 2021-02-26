@@ -237,9 +237,6 @@ class Contact_Vcard_Build
 
         $result = $this->validateParam($param_name, $param_value, $comp, $iter);
 
-        if (PEAR::isError($result)) {
-            return $result;
-        }
         $this->param[$comp][$iter][$param_name][] = $param_value;
 
     }
@@ -1441,9 +1438,6 @@ class Contact_Vcard_Build
     function addTelephone($text, $type = 'phone')
     {
         $autoparam = $this->_getTelephoneType($type);
-        if (PEAR::isError($autoparam)) {
-            return $autoparam;
-        }
         
         $iter = $this->countIter($autoparam);
         $this->setValue($autoparam, $iter, 0, $text);
@@ -1467,9 +1461,6 @@ class Contact_Vcard_Build
     function getTelephone($iter, $type = 'phone')
     {
         $autoparam = $this->_getTelephoneType($type);
-        if (PEAR::isError($autoparam)) {
-            return $autoparam;
-        }
                 
         if (!is_integer($iter) || $iter < 0) {
             return $this->raiseError($autoparam . ' iteration number not valid.');
@@ -1979,9 +1970,6 @@ class Contact_Vcard_Build
     function send($filename, $disposition = 'attachment', $charset = 'us-ascii')
     {
         $vcard = $this->fetch();
-        if (PEAR::isError($vcard)) {
-             return $vcard;
-        }
 
         header('Content-Type: application/directory; ' .
             'profile="vcard"; ' .
